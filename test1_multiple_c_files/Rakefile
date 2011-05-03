@@ -1,0 +1,32 @@
+# specify the task to run when we just type "rake"
+task :default => 'hello'
+
+# lists of files for later use
+C_FILES = FileList['*.c']
+H_FILES = FileList['*.h']
+O_FILES = C_FILES.sub /.c$/, '.o'
+
+# define tasks :clean and :clobber automatically
+require 'rake/clean'
+CLEAN.include O_FILES
+CLOBBER.include('hello','depend.mf')
+
+# actual compilation
+desc "Build the application (default)."
+file 'hello' => O_FILES do |t|
+  sh "cc -o #{t.name} #{O_FILES.join(' ')}"
+end
+
+desc "Compile a single source file."
+rule '.o' => '.c' do |t|
+  sh "cc -o #{t.name} -c #{t.source}"
+end
+
+# automatic dependency generation
+require 'rake/loaders/makefile'
+desc "Automatically create dependencies using makedepend."
+file 'depend.mf' => C_FILES+H_FILES do |t|
+  sh "makedepend -f- -- -- #{C_FILES.join(' ')} > depend.mf"
+end
+import 'depend.mf'
+  

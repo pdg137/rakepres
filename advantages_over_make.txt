@@ -1,0 +1,3 @@
+full programming language (ruby)
+named tasks
+clear distinction between tasks and files (vs. make's .PHONY)

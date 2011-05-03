@@ -1,0 +1,6 @@
+task :default => 'hello'
+
+file 'hello' => 'hello.c' do |t|
+  sh "cc -o #{t.name} #{t.prerequisites}"
+end
+
