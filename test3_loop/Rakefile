@@ -1,0 +1,9 @@
+50.times do |n|
+  file "#{n}.txt" =>
+    (n == 0 ? [] : ["#{n-1}.txt"]) do |t|
+    File.open(t.name, 'w') do |f|
+      f.write "This is file #{n}."
+    end
+  end
+end
+

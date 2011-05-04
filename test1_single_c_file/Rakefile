@@ -1,6 +1,10 @@
 task :default => 'hello'
 
-file 'hello' => 'hello.c' do |t|
+file 'hello' => 'hello.o' do |t|
   sh "cc -o #{t.name} #{t.prerequisites}"
+end
+
+rule '.o' => '.c' do |t|
+  sh "cc -c -o #{t.name} #{t.source}"
 end
 
