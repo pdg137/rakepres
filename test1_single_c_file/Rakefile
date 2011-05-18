@@ -1,7 +1,7 @@
 task :default => 'hello'
 
 file 'hello' => 'hello.o' do |t|
-  sh "cc -o #{t.name} #{t.prerequisites}"
+  sh "cc -o #{t.name} #{t.prerequisites.join ' '}"
 end
 
 rule '.o' => '.c' do |t|

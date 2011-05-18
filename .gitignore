@@ -1,3 +1,4 @@
 hello
 *.o
 *.odp#
+test3_loop/*.txt
